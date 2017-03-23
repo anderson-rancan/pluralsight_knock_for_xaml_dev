@@ -13,6 +13,10 @@ module k4xaml {
 
         public DisplayMessages: KnockoutObservableArray<any> = ko.observableArray([]);
 
+        public FirstNameToSave: KnockoutObservable<string> = ko.observable("Anderson");
+        public LastNameToSave: KnockoutObservable<string> = ko.observable("Rancan");
+        public DisplayValueToSave: KnockoutObservable<string> = ko.observable("");
+
         public Sports: KnockoutObservableArray<any> = ko.observableArray([]);
         public SelectedSport: KnockoutObservable<any> = ko.observable();
 
@@ -30,6 +34,10 @@ module k4xaml {
             this.Sports.push({ id: 2, Name: 'Football' });
             this.Sports.push({ id: 3, Name: 'Basketball' });
             this.Sports.push({ id: 4, Name: 'Soccer' });
+        }
+
+        public Save(data) {
+            data.DisplayValueToSave(data.FirstNameToSave() + " " + data.LastNameToSave());
         }
     }
 }

@@ -10,6 +10,9 @@ var k4xaml;
             this.FirstName = ko.observable("");
             this.LastName = ko.observable("");
             this.DisplayMessages = ko.observableArray([]);
+            this.FirstNameToSave = ko.observable("Anderson");
+            this.LastNameToSave = ko.observable("Rancan");
+            this.DisplayValueToSave = ko.observable("");
             this.Sports = ko.observableArray([]);
             this.SelectedSport = ko.observable();
             this.FullName = ko.computed(function () {
@@ -24,6 +27,9 @@ var k4xaml;
             this.Sports.push({ id: 3, Name: 'Basketball' });
             this.Sports.push({ id: 4, Name: 'Soccer' });
         }
+        MainViewModel.prototype.Save = function (data) {
+            data.DisplayValueToSave(data.FirstNameToSave() + " " + data.LastNameToSave());
+        };
         return MainViewModel;
     }());
     k4xaml.MainViewModel = MainViewModel;

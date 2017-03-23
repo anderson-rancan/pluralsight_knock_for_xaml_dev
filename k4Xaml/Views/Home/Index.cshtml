@@ -47,4 +47,15 @@
     <div data-bind="with: SelectedSport">
         <span data-bind="text: Name"></span>
     </div>
+
+    <br /><br />
+    <form>
+        <input type="text" data-bind="value: FirstNameToSave" />
+        <br />
+        <input type="text" data-bind="value: LastNameToSave" />
+        <br />
+        <input type="button" data-bind="click: Save" />
+    </form>
+
+    Display <!-- ko text: DisplayValueToSave --><!--/ko-->
 </div>
