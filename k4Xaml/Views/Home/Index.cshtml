@@ -27,5 +27,24 @@
 <h3>Demo Area</h3>
 <br />
 <div class="demoArea">
+    <input type="text" data-bind="value: DisplayMessage" />
     <span data-bind="text: DisplayMessage"></span>
+    <input type="checkbox" data-bind="checked: DisplayValue" />
+
+    <br /><br />
+    <input type="text" data-bind="value: FirstName, valueUpdate: 'afterkeydown'" />
+    <input type="text" data-bind="value: LastName, valueUpdate: 'afterkeydown'" />
+    <span data-bind="text: FullName"></span>
+
+    <br /><br />
+    <ul data-bind="foreach: DisplayMessages">
+        <li data-bind="text: Message"></li>
+    </ul>
+
+    <br /><br />
+    Sports: <select data-bind="options: Sports, optionsText: 'Name', optionsCaption: 'Select a Sport', value: SelectedSport"></select>
+    <br />
+    <div data-bind="with: SelectedSport">
+        <span data-bind="text: Name"></span>
+    </div>
 </div>
