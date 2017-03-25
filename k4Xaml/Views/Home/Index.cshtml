@@ -54,8 +54,49 @@
         <br />
         <input type="text" data-bind="value: LastNameToSave" />
         <br />
-        <input type="button" data-bind="click: Save" />
+        <input type="button" data-bind="click: Save" value="Save" />
     </form>
 
     Display <!-- ko text: DisplayValueToSave --><!--/ko-->
+
+    <br /><br />
+    <div data-bind="with: Person">
+        First name: <span data-bind="text: FirstName"></span><br />
+        Last name: <span data-bind="text: LastName"></span><br />
+        Age: <span data-bind="text: Age"></span><br />
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>IsDeleted</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: Address()">
+                @*<tr data-bind="if: IsDeleted() == false">*@
+                <tr data-bind="ifnot: IsDeleted()">
+                    <td style="width: 15px;"><span data-bind="text: $index"></span></td>
+                    <td style="width: 150px;"><span data-bind="text: Address"></span></td>
+                    <td style="width: 150px;"><span data-bind="text: City"></span></td>
+                    <td style="width: 150px;"><span data-bind="text: State"></span></td>
+                    <td style="width: 150px;"><span data-bind="text: Zip"></span></td>
+                    <td style="width: 150px;"><span data-bind="text: IsDeleted"></span></td>
+                    <td style="width: 50px;"><input type="button" value="Edit" data-bind="click: $parent.EditAddress.bind($parent)" /></td>
+                    <td style="width: 50px;"><input type="button" value="Delete" data-bind="click: $parent.DeleteAddress.bind($parent)" /></td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <ul data-bind="foreach: Address">
+            <li><span data-bind="text: City"></span></li>
+        </ul>
+        <br />
+        <input type="button" data-bind="click: $root.SavePerson" value="Save" />
+    </div>
 </div>
