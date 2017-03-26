@@ -15,6 +15,11 @@ var k4xaml;
             this.DisplayValueToSave = ko.observable("");
             this.Sports = ko.observableArray([]);
             this.SelectedSport = ko.observable();
+            this.IsVisible = ko.observable(true);
+            this.Items = ko.observableArray([]);
+            this.Status = ko.observable("");
+            this.OverdueStatus = ko.observable("Normal");
+            this.StatusStyle = ko.observable("Normal");
             this.FullName = ko.computed(function () {
                 return _this.FirstName() + " " + _this.LastName();
             });
@@ -49,12 +54,56 @@ var k4xaml;
             address.State("NC");
             address.Zip("556");
             this.Person.Address.push(address);
+            this.ComputedStatus = ko.computed(function () {
+                switch (_this.StatusStyle()) {
+                    case "Low":
+                        return "lowStatus";
+                    case "Normal":
+                        return "normalStatus";
+                    case "High":
+                        return "highStatus";
+                }
+            });
+            this.StatusWeight = ko.computed(function () {
+                if (_this.OverdueStatus() == "Overdue") {
+                    return "bold";
+                }
+                return "normal";
+            });
+            this.StatusSize = ko.computed(function () {
+                if (_this.OverdueStatus() == "Overdue") {
+                    return "18px";
+                }
+                return "12px";
+            });
         }
         MainViewModel.prototype.Save = function (data) {
             data.DisplayValueToSave(data.FirstNameToSave() + " " + data.LastNameToSave());
         };
         MainViewModel.prototype.SavePerson = function () {
             console.log("Save person here");
+        };
+        MainViewModel.prototype.ToggleVisibility = function () {
+            this.IsVisible(!this.IsVisible());
+        };
+        MainViewModel.prototype.AddItems = function () {
+            this.Items.push({});
+        };
+        MainViewModel.prototype.ToggleStatus = function () {
+            if (this.Status().length == 0) {
+                this.Status("Populated");
+            }
+            else {
+                this.Status("");
+            }
+        };
+        MainViewModel.prototype.ToggleOverdueStatus = function () {
+            if (this.OverdueStatus() == "Normal") {
+                this.OverdueStatus("Overdue");
+            }
+            else {
+                this.OverdueStatus("Normal");
+            }
         };
         return MainViewModel;
     }());

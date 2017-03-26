@@ -20,7 +20,18 @@ module k4xaml {
         public Sports: KnockoutObservableArray<any> = ko.observableArray([]);
         public SelectedSport: KnockoutObservable<any> = ko.observable();
 
+        public IsVisible: KnockoutObservable<boolean> = ko.observable(true);
+
+        public Items: KnockoutObservableArray<any> = ko.observableArray([]);
+        public Status: KnockoutObservable<string> = ko.observable("");
+
         public Person: Person;
+
+        public OverdueStatus: KnockoutObservable<string> = ko.observable("Normal");
+        public StatusStyle: KnockoutObservable<string> = ko.observable("Normal");
+        public ComputedStatus: KnockoutComputed<string>;
+        public StatusWeight: KnockoutComputed<string>;
+        public StatusSize: KnockoutComputed<string>;
 
         constructor() {
             this.FullName = ko.computed(() => {
@@ -63,6 +74,33 @@ module k4xaml {
             address.State("NC");
             address.Zip("556");
             this.Person.Address.push(address);
+
+            this.ComputedStatus = ko.computed(() => {
+                switch (this.StatusStyle()) {
+                    case "Low":
+                        return "lowStatus";
+                    case "Normal":
+                        return "normalStatus";
+                    case "High":
+                        return "highStatus";
+                }
+            })
+
+            this.StatusWeight = ko.computed(() => {
+                if (this.OverdueStatus() == "Overdue") {
+                    return "bold";
+                }
+
+                return "normal";
+            })
+
+            this.StatusSize = ko.computed(() => {
+                if (this.OverdueStatus() == "Overdue") {
+                    return "18px";
+                }
+
+                return "12px";
+            })
         }
 
         public Save(data) {
@@ -71,6 +109,32 @@ module k4xaml {
 
         public SavePerson() {
             console.log("Save person here");
+        }
+
+        public ToggleVisibility() {
+            this.IsVisible(!this.IsVisible());
+        }
+
+        public AddItems() {
+            this.Items.push({});
+        }
+
+        public ToggleStatus() {
+            if (this.Status().length == 0) {
+                this.Status("Populated");
+            }
+            else {
+                this.Status("");
+            }
+        }
+
+        public ToggleOverdueStatus() {
+            if (this.OverdueStatus() == "Normal") {
+                this.OverdueStatus("Overdue");
+            }
+            else {
+                this.OverdueStatus("Normal");
+            }
         }
     }
 
